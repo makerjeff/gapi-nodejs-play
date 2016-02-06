@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>simple page</title>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/reset.css">
+
+
+    <style>
+
+
+        nav {
+            display: flex;
+            position: fixed;
+            width: 100%;
+            height: 100px;
+
+            background: rgba(240,240,240,1.0);
+            box-shadow: 0px 2px 2px rgba(20,20,20,0.25);
+        }
+
+        nav li {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        #main_window {
+            background: rgba(250,250,250,1.0);
+        }
+
+        .dummyDivs {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="site_container">
+    <nav id="navigation">
+        <ul>
+            <!--<li>link one</li>-->
+            <!--<li>link two</li>-->
+            <!--<li>link three</li>-->
+            <!--<li>link four</li>-->
+        </ul>
+    </nav>
+
+    <div id="main_window"></div>
+
+</div>
+
+<script>
+    var numDummyDivs = 10;
+    var mainWindowDiv = document.getElementById('main_window');
+
+    //adjust main div to just above the fold
+    mainWindowDiv.style.height = window.innerHeight.toString() + 'px';
+
+    //add some dummy windows
+    for (i = 0; i < numDummyDivs; i++) {
+
+        var dummyDiv = document.createElement('div');
+        dummyDiv
+
+    }
+
+</script>
+</body>
+</html>
