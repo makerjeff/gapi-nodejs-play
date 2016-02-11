@@ -1,8 +1,11 @@
 /**
  * SERVER.JS
- * SPARTAN EXPRESS SERVER
- * Created by jefferson.wu on 1/7/16.
+ * SPARTAN EXPRESS SERVER 1.1
+ * Updated by jefferson.wu on 2016.FEB.10.
  */
+//server version
+var serverVersion = 1.1;
+
 // ===== MODULES =====
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -60,7 +63,8 @@ init();
  *
  */
 function init() {
-    console.log(colors.rainbow(' Starting EXPRESS server on ' + port + ' on a ' + process.arch + ' machine.'));
+
+    console.log(colors.rainbow(' Starting ') + colors.yellow('SPARTAN EXPRESS SERVER ') + colors.blue(serverVersion) + colors.rainbow(' on ') + port + colors.rainbow(' on a ') + process.arch + colors.rainbow(' machine.'));
 
     //open port on defined port, if nothing is available, default to 8000.
     app.listen(port || 8000);

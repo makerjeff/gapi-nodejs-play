@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>G-Map Test</title>
+
+    <style>
+        /*MUST DECLARE, OTHERWISE BODY DOESN'T FILL*/
+        /*this bypasses the need for 'adjustWindow.js'*/
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        #testDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+            background: rgba(240,240,240, 1.0);
+            height: 100%;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .innerDiv {
+
+            margin: 2px;
+            background: rgba(255,0,0,1.0);
+            height: 200px;
+            width: 200px;
+            border: 5px solid black;
+            border-radius: 10px;
+            box-shadow: 1px 2px 2px rgba(50,50,50,0.5);
+            transition: background 0.25s, border-radius 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .innerDiv:hover {
+            background: rgba(0,255,0,1.0);
+            border-radius: 50%;
+            box-shadow: 1px 10px 10px rgba(50,50,50, 0.25);
+        }
+
+        #nav {
+            position: fixed;
+
+            width: 100%;
+            height: 75px;
+
+            background: rgba(240,240,240, 1.0);
+
+            box-shadow: 0px 2px 2px rgba(50,50,50,0.25);
+
+            z-index: 20;
+        }
+
+        nav fieldset {
+            border: 0px dotted rgba(50,50,50,1.0);
+        }
+
+    </style>
+</head>
+<body>
+
+<!--WHERE TO DRAW MAP-->
+
+<nav id="nav">
+    <form id="latLong">
+        <fieldset>
+            <label>enter stuff</label>
+            <input type="text" required placeholder="latitude">
+            <input type="text" required placeholder="longitude">
+        </fieldset>
+    </form>
+</nav>
+<div id="map"></div>
+
+<!--WHERE TO DRAW TEST BUTTONS-->
+<!--<div id="testDiv">-->
+    <!--<div class="innerDiv"></div>-->
+    <!--<div class="innerDiv"></div>-->
+    <!--<div class="innerDiv"></div>-->
+    <!--<div class="innerDiv"></div>-->
+    <!--<div class="innerDiv"></div>-->
+<!--</div>-->
+<!-- LOAD GOOGLE -->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBgGVBgmUfPPRZSXKXFQFLDXCy2B8Ld2Y&callback=initMap">
+</script>
+
+<!-- LOAD JS -->
+<script>
+    //define my location
+    var myLocation = {lat: 34.008928, lng: -118.491824};
+    var furtherLocation = {lat:34.1, lng: -118.491824};
+
+    //map object
+    var map;
+    //marker 1object
+    var marker1;
+    var marker1Text = 'This is where I work.';
+
+    var marker2;
+    var marker2Text = 'This is a little further away from work.';
+
+    //init map
+    function initMap() {
+
+
+        //create new map object centered on myLocation
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: myLocation,
+            //zoom level: 1=world, 5=landmass/continent, 10=city, 15=streets, 20=building
+            zoom: 15
+        });
+
+        //create first marker at 180LA on construction
+        marker1 = new google.maps.Marker({position: myLocation, map: map, title: marker1Text});
+
+        //create second marker, then add it later
+        marker2 = new google.maps.Marker({position: furtherLocation, title: marker2Text});
+        //add now
+        marker2.setMap(map);
+
+    }
+
+    //TODO: continue with Markers tutorial: https://developers.google.com/maps/documentation/javascript/markers
+    //TODO: try animating
+    //TODO: try custom graphic
+
+    //TODO: try Draw Library https://developers.google.com/maps/documentation/javascript/drawinglayer
+
+</script>
+
+</body>
+</html>
