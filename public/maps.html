@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>G-Map Test</title>
+    <title>SXSW 180</title>
 
     <style>
         /*MUST DECLARE, OTHERWISE BODY DOESN'T FILL*/
@@ -49,20 +49,35 @@
         }
 
         #nav {
-            position: fixed;
 
+            display: flex;
+
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+
+            position: fixed;
             width: 100%;
             height: 75px;
-
             background: rgba(240,240,240, 1.0);
-
             box-shadow: 0px 2px 2px rgba(50,50,50,0.25);
-
             z-index: 20;
         }
 
         nav fieldset {
             border: 0px dotted rgba(50,50,50,1.0);
+        }
+
+        nav input {
+            padding: 10px;
+        }
+
+        nav button {
+            padding: 10px;
+        }
+
+        nav #latLong {
+
         }
 
     </style>
@@ -72,13 +87,14 @@
 <!--WHERE TO DRAW MAP-->
 
 <nav id="nav">
-    <form id="latLong">
+    <div id="latLong">
         <fieldset>
-            <label>enter stuff</label>
-            <input type="text" required placeholder="latitude">
-            <input type="text" required placeholder="longitude">
+            <label></label>
+            <input id="lat_field" type="number" required placeholder="latitude" value="34.015">
+            <input id="lng_field" type="number" required placeholder="longitude" value="-118.491824">
+            <button id="add_pin_button" type="submit"> add pin </button>
         </fieldset>
-    </form>
+    </div>
 </nav>
 <div id="map"></div>
 
@@ -91,29 +107,91 @@
     <!--<div class="innerDiv"></div>-->
 <!--</div>-->
 <!-- LOAD GOOGLE -->
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={insert api key}&callback=initMap">
+<script id="maps_script" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVfkLpNr4RoZ335Hb_bY7vRHWbUptwimI&libraries=drawing&callback=initAll">
 </script>
 
 <!-- LOAD JS -->
+<script src="./js/titleSwapper.js"></script>
+
+<!-- INLINE JS -->
 <script>
+
     //define my location
     var myLocation = {lat: 34.008928, lng: -118.491824};
     var furtherLocation = {lat:34.015, lng: -118.491824};
 
-    //map object
+    //MAP VARS
     var map;
-    //marker 1object
     var marker1;
     var marker1Text = 'This is where I work.';
-
     var marker2;
     var marker2Text = 'This is a little further away from work.';
 
-    //init map
+    //store markers, assign numbers
+    var markerArray = [];
+
+
+
+
+    // ====== EVENTS ======
+
+    var addPinButton = document.getElementById('add_pin_button');
+    addPinButton.addEventListener('click', function(event){
+        event.preventDefault;
+
+        addPin();
+    });
+
+
+//    document.addEventListener('DOMContentLoaded', function(event){
+//        initDrawing();
+//    });
+
+
+
+
+    // ====== HELPER FUNCTIONS AND CALLBACKS ========
+
+    //parse inputs and add pin
+
+    function addPin() {
+        var lat = document.getElementById('lat_field').value;
+        var lng = document.getElementById('lng_field').value;
+
+        var lat = Number(lat);
+        var lng = Number(lng);
+
+
+
+        if (lat == '' || lng == '') {
+            alert('please enter values!');
+        }
+
+        else {
+            console.log('lat: ' + lat + ', long: ' + lng);
+
+            //create markers: position, map, title
+
+            var marker = new google.maps.Marker({position: {lat: lat, lng: lng}, map: map, title: (lat + lng).toString()});
+
+            //clear fields
+//            document.getElementById('lat_field').value = '';
+//            document.getElementById('lng_field').value = '';
+
+
+        }
+
+    }
+
+    function initAll () {
+        initMap();
+        initDrawing();
+
+    }
+
+
+    //init map function, called by google maps javascript call
     function initMap() {
-
-
         //create new map object centered on myLocation
         map = new google.maps.Map(document.getElementById('map'), {
             center: myLocation,
@@ -128,8 +206,39 @@
         marker2 = new google.maps.Marker({position: furtherLocation, title: marker2Text});
         //add now
         marker2.setMap(map);
-
     }
+
+    function initDrawing() {
+        //DRAWING MANAGER
+        var drawingManager = new google.maps.drawing.DrawingManager(
+            {
+                drawingMode: google.maps.drawing.OverlayType.MARKER,
+                drawingControl: true,
+                drawingControlOptions: {
+                    position: google.maps.ControlPosition.TOP_CENTER,
+                    drawingModes: [
+                        google.maps.drawing.OverlayType.MARKER,
+                        google.maps.drawing.OverlayType.CIRCLE,
+                        google.maps.drawing.OverlayType.POLYGON,
+                        google.maps.drawing.OverlayType.POLYLINE,
+                        google.maps.drawing.OverlayType.RECTANGLE
+                    ]
+                },
+                markerOptions: {icon: './img/heart-outline-sm.png'},
+                circleOptions: {
+                    fillColor: '#ffff00',
+                    fillOpacity: 1,
+                    strokeWeight: 5,
+                    clickable: false,
+                    editable: true,
+                    zIndex:1
+                }
+            }
+        );
+
+        drawingManager.setMap(map);
+    }
+
 
     //TODO: continue with Markers tutorial: https://developers.google.com/maps/documentation/javascript/markers
     //TODO: try animating
