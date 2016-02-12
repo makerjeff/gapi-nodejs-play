@@ -90,9 +90,10 @@
     <div id="latLong">
         <fieldset>
             <label></label>
-            <input id="lat_field" type="number" required placeholder="latitude" value="34.015">
-            <input id="lng_field" type="number" required placeholder="longitude" value="-118.491824">
+            <input id="lat_field" type="number" required placeholder="latitude" value="34.015" steps="0.001">
+            <input id="lng_field" type="number" required placeholder="longitude" value="-118.491824" steps="0.001">
             <button id="add_pin_button" type="submit"> add pin </button>
+            <button id="remove_bar_button">X</button>
         </fieldset>
     </div>
 </nav>
@@ -142,6 +143,12 @@
         addPin();
     });
 
+    var killButton = document.getElementById('remove_bar_button');
+    killButton.addEventListener('click', function(event){
+        //remove nav
+        document.getElementById('nav').parentNode.removeChild(document.getElementById('nav'));
+    });
+
 
 //    document.addEventListener('DOMContentLoaded', function(event){
 //        initDrawing();
@@ -185,9 +192,14 @@
 
     }
 
+    //JSONP callback from google
     function initAll () {
         initMap();
         initDrawing();
+
+        //put logic here as this runs after google has been loaded.
+
+
     }
 
 
@@ -199,6 +211,70 @@
             //zoom level: 1=world, 5=landmass/continent, 10=city, 15=streets, 20=building
             zoom: 15
         });
+
+        //===== MAP STYLES =====
+        map.set('styles', [
+            {
+                featureType: 'road',
+                elementType: 'geometry',
+
+                stylers: [
+                    {color: '#000000'},
+                    {weight: '0.25'}
+                ]
+            },
+            {
+                featureType: 'road',
+                elementType: 'labels',
+
+                stylers: [
+                    {saturation: -100},
+                    {invert_lightness: true}
+                ]
+            },
+            {
+                featureType: 'landscape',
+                elementType: 'geometry',
+
+                stylers: [
+                    {hue: '#ffff00'},
+                    {gamma: 1.4},
+                    {saturation: 82},
+                    {lightness: 96}
+                ]
+            },
+            {
+                featureType: 'poi.school',
+                elementType: 'geometry',
+
+                stylers: [
+                    {hue: '#ffff700'},
+                    {lightness: -15},
+                    {saturation: 99}
+                ]
+            },
+            {
+                featureType: 'poi',
+                elementType: 'geometry',
+                stylers: [
+                    { visibility: 'off' }
+                ]
+            },
+            {
+                featureType: 'poi.school',
+                elementType: 'geometry',
+
+                stylers: [
+                    { visibility: 'on' },
+                    { hue: '#fff700' },
+                    { lightness: -15 },
+                    { saturation: 99 }
+                ]
+
+            }
+
+
+        ]);
 
         //create first marker at 180LA on construction
         marker1 = new google.maps.Marker({position: myLocation, map: map, title: marker1Text});
@@ -225,12 +301,24 @@
                         google.maps.drawing.OverlayType.RECTANGLE
                     ]
                 },
-                markerOptions: {icon: './img/heart-outline-sm.png'},
+                markerOptions: {
+                    icon: './img/heart-outline-sm.png'
+                },
+
                 circleOptions: {
                     fillColor: '#ffff00',
                     fillOpacity: 1,
-                    strokeWeight: 5,
-                    clickable: false,
+                    strokeWeight: 1,
+                    clickable: true,
+                    editable: true,
+                    zIndex:1
+                },
+
+                rectangleOptions: {
+                    fillColor: 'rgba(255,0,0,1.0)',
+                    fillOpacity: 0.25,
+                    strokeWeight: 1,
+                    clickable: true,
                     editable: true,
                     zIndex:1
                 }
@@ -238,6 +326,11 @@
         );
 
         drawingManager.setMap(map);
+        drawingManager.setOptions(
+            {
+                drawingControl: true,
+            }
+        );
     }
 
 
