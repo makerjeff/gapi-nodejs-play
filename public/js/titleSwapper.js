@@ -31,20 +31,16 @@ var JeffApp = {
     };
 
 
-var JeffApp2 = JeffApp2 || function(focusTitle, blurTitle) {
+var JeffApp2 = function(focusTitle, blurTitle) {
     this.focusTitle = focusTitle;
     this.blurTitle = blurTitle;
+
+    this.debug1 = function(ft, bt) {
+        console.log('focus: ' + ft + ', bt: ' + bt);
+    }
 };
 
-/**
- *
- * @type {Function|(function(this:*))}
- */
-JeffApp2.prototype.switchToFocus = function(){
-    document.title = this.focusTitle;
-}.bind(this); //binds to parent object namespace
-
-JeffApp2.prototype.switchToBlur = function(){
-    document.title = this.blurTitle;
-}.bind(this);
+JeffApp2.prototype.debug2 = function(ft, bt) {
+    console.log('focus: ' + ft + ', bt: ' + bt);
+};
 

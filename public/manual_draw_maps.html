@@ -154,10 +154,11 @@
 //    });
 
 
-    var app = new JeffApp2('180', 'come back!');
-
-    window.addEventListener('blur', app.switchToBlur);
-    window.addEventListener('focus', app.switchToFocus);
+    //create a new instance of JeffApp2
+    var app = new JeffApp2;
+    //test both object method and prototype method
+    app.debug1('first message', 'second message');
+    app.debug2('first message', 'second message2');
 
 
 
