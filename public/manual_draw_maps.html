@@ -149,11 +149,15 @@
         document.getElementById('nav').parentNode.removeChild(document.getElementById('nav'));
     });
 
-
 //    document.addEventListener('DOMContentLoaded', function(event){
 //        initDrawing();
 //    });
 
+
+    var app = new JeffApp2('180', 'come back!');
+
+    window.addEventListener('blur', app.switchToBlur);
+    window.addEventListener('focus', app.switchToFocus);
 
 
 
@@ -198,6 +202,7 @@
         initDrawing();
 
         //put logic here as this runs after google has been loaded.
+
 
 
     }
