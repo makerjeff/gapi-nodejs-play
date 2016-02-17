@@ -12,6 +12,7 @@
     "basic-auth":"^1.0.3",
     "socket.io":"latest",
     "serialport":"latest",
-    "serve-favicon":"latest"
+    "serve-favicon":"latest",
+    "twitter":"latest"
   }
 }
