@@ -1,6 +1,6 @@
 .idea/
 node_modules/
 public/api_key.js
-axure/*
+axure/
 
 dev_env.js
