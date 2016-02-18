@@ -14,7 +14,11 @@ Added the use of environmental variables for storing access keys. **(NEW)**
 - [Google Maps Info Windows - Simple](https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple)
 - [Google Maps Info Windows](https://developers.google.com/maps/documentation/javascript/infowindows)
 - [Setting up environmental variables](http://thewebivore.com/super-simple-environment-variables-node-js/)
+- [Twitter GET API Reference](https://dev.twitter.com/rest/reference/get/search/tweets)
 
 ## Notes
+
+**util.inspect( object );** - used for debugging large objects. returns object in a string representation.<br>
+something else
 
 
