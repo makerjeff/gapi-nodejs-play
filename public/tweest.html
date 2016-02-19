@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twee-st</title>
+    <script src="./js/promise_xhr.js"></script>
+
+
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="inputDiv">
+    <input id="inputField" type="text" placeholder="enter query"><button id="submit">q</button>
+
+</div>
+
+<div id="resultDiv">
+</div>
+
+<script>
+    var inputField = document.getElementById('inputField');
+    var resultDiv = document.getElementById('resultDiv');
+    var button = document.getElementById('submit');
+
+    button.addEventListener('click', function(event){
+
+        var inputFieldValue = document.getElementById('inputField').value;
+
+        console.log(event.type);
+
+        getData('/debug/' + inputFieldValue).then(function(response){
+            console.log('successfully grabbed data');
+            console.log('message: ' + response);
+
+            displayResponse(response);
+
+        }).catch(function(error){
+            console.log(Error('Failed' + error));
+        });
+
+        document.getElementById('inputField').value = '';
+    });
+
+
+
+    // custom functions
+
+    function displayResponse(responseText){
+        resultDiv.innerHTML = responseText;
+    }
+
+</script>
+
+</body>
+</html>

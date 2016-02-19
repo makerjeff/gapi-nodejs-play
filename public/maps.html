@@ -257,7 +257,7 @@
     //JSONP callback from google
     function initAll () {
         initMap();
-       initDrawing();
+       //initDrawing();
 
         //put logic here as this runs after google has been loaded.
 
@@ -358,7 +358,44 @@
             var lng = array[index].coordinates.lng;
 
             var marker = new google.maps.Marker({position: array[index].coordinates, map: map, title: array[index].text});
+
+            var infowindow = new google.maps.InfoWindow({
+                content: '<b>' +
+                array[index].text +
+                '</b>' +
+                '<p> Some information about the location here at ' +
+                array[index].coordinates.lat +
+                ',' +
+                array[index].coordinates.lng +
+                '</p>'
+            });
+
+            marker.addListener('click', function(){
+                infowindow.open(map, marker);
+            });
         });
+
+
+        // ===== CUSTOM INFO WINDOWS =====
+
+        var location = {lat: -25.363, lng: 131.044};
+        var contentString = '<b>My Favorite Window</b>' +
+                '<p>Favorite window paragraph with awesome info. Blah blah blah blah blah more info here and there blah blah blah.</p> <img src="./img/heart-outline-sm.png">';
+
+        var marker3 = new google.maps.Marker({
+            position: location,
+            map: map,
+            title: 'My Favorite Title'
+        });
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        marker3.addListener('click', function(){
+            infowindow.open(map, marker3);
+        });
+
 
 
     }

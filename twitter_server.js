@@ -7,6 +7,9 @@
  * 2016.FEB.18:
  * - implementing twitter API data grab
  */
+//ENVIRONMENT VARS / KEYS
+require('./dev_env.js');
+
 //server version
 var serverVersion = 0.1;
 
@@ -16,10 +19,23 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var colors = require('colors');
 var favicon = require('serve-favicon');
+var Twitter = require('twitter');
+
+
 
 // ===== GLOBALS =====
 var app = express();        //init express
 var port = process.argv[2]; //input port at launch
+
+// ===== TWITTER SPECIFIC =====
+var client = new Twitter({
+    consumer_key: process.env.CONSUMER_KEY,
+    consumer_secret: process.env.CONSUMER_SECRET,
+    access_token_key: process.env.ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET
+});
+
+
 
 // ===== MIDDLEWARE =====
 //serve favicon
@@ -67,9 +83,34 @@ init();
  *
  */
 function init() {
-
+    //console message
     console.log(colors.rainbow(' Starting ') + colors.yellow('TWITTER EXPRESS SERVER ') + colors.blue(serverVersion) + colors.rainbow(' on ') + port + colors.rainbow(' on a ') + process.arch + colors.rainbow(' machine.'));
 
     //open port on defined port, if nothing is available, default to 8000.
     app.listen(port || 3000);
+}
+
+
+// TWITTER FUNCTIONS
+/**
+ * Dump current environment API keys to the console.
+ */
+function debugCurrentKeys(){
+    console.log('consumer key: ' + process.env.CONSUMER_KEY);
+    console.log('consumer secret: ' + process.env.CONSUMER_SECRET);
+    console.log('access token key: ' + process.env.ACCESS_TOKEN_KEY);
+    console.log('access token secret: ' + process.env.ACCESS_TOKEN_SECRET);
+}
+
+function searchTweets(){
+    console.log('searching for: ' + query + '...');
+
+    client.get('search/tweets',{q:query, count:3, include_entities: true} ,function(error, tweets, response){
+        if(error) {
+            throw error;
+        } else {
+            console.log(tweets);
+            //console.log(response);
+        }
+    });
 }
