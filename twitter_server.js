@@ -6,6 +6,7 @@
  * changeLog:
  * 2016.FEB.18:
  * - implementing twitter API data grab
+ * - enable CORS
  */
 //ENVIRONMENT VARS / KEYS
 require('./dev_env.js');
@@ -38,14 +39,22 @@ var client = new Twitter({
 
 
 // ===== MIDDLEWARE =====
+
+//enable CORS
+app.use(function(request, response, next) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 //serve favicon
 app.use(favicon(__dirname + '/public/favicon.ico'));
-
-//serve static files using express
+//serve static files
 app.use(express.static(__dirname + '/public'));
 
 // = logs to node console with every transaction
 //TODO Make this log to local file.
+//TODO implement time stamp as well.
 app.use(function(request, response, next){
     console.log('%s %s %s', request.method, request.url, request.path);
     next();
@@ -55,23 +64,7 @@ app.use(function(request, response, next){
 app.use(bodyParser.json());
 
 // ===== EXPRESS ROUTES =====
-
-// default tester route
-app.get('/debug', function(request, response){
-    var randomNumber = Math.ceil(Math.random() * 100);
-    response.type('text/plain');
-    response.send('Express routes are working. Your lucky number of the moment is ' + randomNumber + '.');
-});
-
-app.get('/debug/:loc', function(request, response){
-    var inputMessage = request.params.loc;
-    response.type('text/html');
-    response.send('Debug Route 2 also working. You typed, <b>"' + inputMessage + '".</b>');
-});
-//basic 404 to catch all at the end
-app.get('*', function(request, response){
-    response.sendFile(__dirname + '/public/404.html');
-});
+initDebugRoutes();
 
 // ===== MAIN LOGIC =====
 init();
@@ -88,6 +81,29 @@ function init() {
 
     //open port on defined port, if nothing is available, default to 8000.
     app.listen(port || 3000);
+}
+
+/**
+ * Initializes all the DEBUG routes, acts as template to all other routes.
+ */
+function initDebugRoutes(){
+    // default tester route
+    app.get('/debug', function(request, response){
+        var randomNumber = Math.ceil(Math.random() * 100);
+        response.type('text/plain');
+        response.send('Express routes are working. Your lucky number of the moment is ' + randomNumber + '.');
+    });
+
+    app.get('/debug/:loc', function(request, response){
+        var inputMessage = request.params.loc;
+        response.type('text/html');
+        response.send('Debug Route 2 also working. You typed, <b>"' + inputMessage + '".</b>');
+    });
+//basic 404 to catch all at the end
+    app.get('*', function(request, response){
+        response.sendFile(__dirname + '/public/404.html');
+    });
+
 }
 
 
