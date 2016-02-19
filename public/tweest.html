@@ -27,10 +27,11 @@
     button.addEventListener('click', function(event){
 
         var inputFieldValue = document.getElementById('inputField').value;
+        var encodedIFV = encodeURI(inputFieldValue);
 
         console.log(event.type);
 
-        getData('/debug/' + inputFieldValue).then(function(response){
+        getData('/debug/' + encodedIFV).then(function(response){
             console.log('successfully grabbed data');
             console.log('message: ' + response);
 
