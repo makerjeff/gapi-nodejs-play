@@ -4,15 +4,17 @@
  * Updated by jefferson.wu on 2016.FEB.18.
  *
  * changeLog:
+ * 2016.FEB.19:
+ * - enabled CORS
+ * - added time stamp
  * 2016.FEB.18:
  * - implementing twitter API data grab
- * - enable CORS
  */
 //ENVIRONMENT VARS / KEYS
 require('./dev_env.js');
 
 //server version
-var serverVersion = 0.1;
+var serverVersion = '0.1';
 
 // ===== MODULES =====
 var express = require('express');
@@ -54,9 +56,8 @@ app.use(express.static(__dirname + '/public'));
 
 // = logs to node console with every transaction
 //TODO Make this log to local file.
-//TODO implement time stamp as well.
 app.use(function(request, response, next){
-    console.log('%s %s %s', request.method, request.url, request.path);
+    console.log('%s %s %s %s', request.method, request.url, request.path, colors.yellow(Date().toString()));
     next();
 });
 
@@ -65,6 +66,21 @@ app.use(bodyParser.json());
 
 // ===== EXPRESS ROUTES =====
 initDebugRoutes();
+
+//first twitter route
+app.get('/tweest', function(request, response){
+    var tweestObject = [
+        {'name':'jeff', 'title':'creative technologist'},
+        {'name':'stephen', 'title':'executive producer'},
+        {'name':'helena', 'title':'digital producer / project manager / trafficker / qa'},
+        {'name':'ryan', 'title':'senior digital producer'},
+        {'name':'chianne', 'title':'digital producer'}
+    ];
+
+    response.type('text/html');
+    response.send(JSON.stringify(tweestObject));
+
+});
 
 // ===== MAIN LOGIC =====
 init();
@@ -103,7 +119,6 @@ function initDebugRoutes(){
     app.get('*', function(request, response){
         response.sendFile(__dirname + '/public/404.html');
     });
-
 }
 
 

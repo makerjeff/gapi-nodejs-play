@@ -59,7 +59,7 @@
             position: fixed;
             width: 100%;
             height: 75px;
-            background: rgba(240,240,240, 1.0);
+            background: rgba(250,250,250, 1.0);
             box-shadow: 0px 2px 2px rgba(50,50,50,0.25);
             z-index: 20;
         }
@@ -77,6 +77,7 @@
         }
 
         nav #latLong {
+            visibility: hidden;
 
         }
 
@@ -153,43 +154,63 @@
     var markerArray = [
         {
             coordinates: {lat: 34.008928, lng: -118.491824},
-            text:"my first location! ate an icecream cone."
+            text:"my first location! ate an icecream cone.",
+            url:'http://www.makerjeff.com',
+            url_text:'first location link'
         },
         {
             coordinates: {lat: 34.01, lng: -118.5},
-            text:"my second location! shined a random person's shoes."
+            text:"my second location! shined a random person's shoes.",
+            url:'http://www.makerjeff.com',
+            url_text:'second location link'
         },
         {
             coordinates: {lat: 34.015, lng: -118.48},
-            text:"my third location! rode a bicycle into a wall."
+            text:"my third location! rode a bicycle into a wall.",
+            url:'http://www.makerjeff.com',
+            url_text:'third location link'
         },
         {
             coordinates: {lat: 34.02, lng: -118.51},
-            text:"my fourth location! picked up a stranger."
+            text:"my fourth location! picked up a stranger.",
+            url:'http://www.makerjeff.com',
+            url_text:'fourth location link'
         },
         {
             coordinates: {lat: 34.025, lng: -118.48},
-            text:"my fifth location! dropped off a stranger."
+            text:"my fifth location! dropped off a stranger.",
+            url:'http://www.makerjeff.com',
+            url_text:'fifth location link'
         },
         {
             coordinates: {lat: 34.03, lng: -118.51},
-            text:"my sixth location! was stalked by a creeper."
+            text:"my sixth location! was stalked by a creeper.",
+            url:'http://www.makerjeff.com',
+            url_text:'sixth location link'
         },
         {
             coordinates: {lat: 34.035, lng: -118.49},
-            text:"my seventh location! took a nap."
+            text:"my seventh location! took a nap.",
+            url:'http://www.makerjeff.com',
+            url_text:'seventh location link'
         },
         {
             coordinates: {lat: 34.045, lng: -118.48},
-            text:"my eighth location! had a child."
+            text:"my eighth location! had a child.",
+            url:'http://www.makerjeff.com',
+            url_text:'eighth location link'
         },
         {
             coordinates: {lat: 34.050, lng: -118.51},
-            text:"my ninth location! fed the child."
+            text:"my ninth location! fed the child.",
+            url:'http://www.makerjeff.com',
+            url_text:'ninth location link'
         },
         {
             coordinates: {lat: 34.051, lng: -118.50},
-            text:"my tenth location! my life is all about the child."
+            text:"my tenth location! my life is all about the child.",
+            url:'http://www.makerjeff.com',
+            url_text:'tenth location link'
         }
     ];
 
@@ -338,12 +359,12 @@
 
         // ===== MANUAL TEST MARKERS ======
         //create first marker at 180LA on construction
-        marker1 = new google.maps.Marker({position: myLocation, map: map, title: marker1Text});
+        //marker1 = new google.maps.Marker({position: myLocation, map: map, title: marker1Text});
 
         //create second marker, then add it later
-        marker2 = new google.maps.Marker({position: furtherLocation, title: marker2Text});
+        //marker2 = new google.maps.Marker({position: furtherLocation, title: marker2Text});
         //add now
-        marker2.setMap(map);
+        //marker2.setMap(map);
 
 
         // ===== AUTO MARKERS BASED ON MARKER ARRAY ======
@@ -357,7 +378,7 @@
             var lat = array[index].coordinates.lat;
             var lng = array[index].coordinates.lng;
 
-            var marker = new google.maps.Marker({position: array[index].coordinates, map: map, title: array[index].text});
+            var marker = new google.maps.Marker({position: array[index].coordinates, map: map, title: array[index].text, icon:'./img/heart-outline-sm.png'});
 
             var infowindow = new google.maps.InfoWindow({
                 content: '<b>' +
@@ -367,6 +388,13 @@
                 array[index].coordinates.lat +
                 ',' +
                 array[index].coordinates.lng +
+                '</p>'+
+                '<p>' +
+                '<a href="' +
+                array[index].url +
+                '" target="_blank">' +
+                array[index].url_text +
+                '</a>' +
                 '</p>'
             });
 

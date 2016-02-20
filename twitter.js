@@ -63,7 +63,7 @@ function searchTweets(){
         if(error) {
             throw error;
         } else {
-            console.log(tweets);
+            console.log(JSON.parse(response.body));
             //console.log(response);
         }
     });

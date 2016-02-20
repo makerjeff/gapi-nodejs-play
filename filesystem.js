@@ -2,6 +2,7 @@
  * FILE SYSTEM TEST
  * instructions:
  * - run by node filesystem.js < query string >
+ *     based off of this tutorial: http://www.tutorialspoint.com/nodejs/nodejs_file_system.htm
   */
 
 var fs = require('fs');

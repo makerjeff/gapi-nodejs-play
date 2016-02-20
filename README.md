@@ -22,4 +22,7 @@ Added the use of environmental variables for storing access keys. **(NEW)**<br>
 **util.inspect( object );** - used for debugging large objects. returns object in a string representation.<br>
 something else
 
+## Workflow
+Geolocation must be enabled during the tweet, and 'share precise location' must be enabled before the 'geo' and 'coordinates' keys get populated with their respective objects.
+
 
