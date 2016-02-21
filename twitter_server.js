@@ -4,6 +4,9 @@
  * Updated by jefferson.wu on 2016.FEB.18.
  *
  * changeLog:
+ * 2016.FEB.19:
+ * - enabled CORS
+ * - added time stamp
  * 2016.FEB.18:
  * - implementing twitter API data grab
  */
@@ -11,7 +14,7 @@
 require('./dev_env.js');
 
 //server version
-var serverVersion = 0.1;
+var serverVersion = '0.1';
 
 // ===== MODULES =====
 var express = require('express');
@@ -38,16 +41,23 @@ var client = new Twitter({
 
 
 // ===== MIDDLEWARE =====
+
+//enable CORS
+app.use(function(request, response, next) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 //serve favicon
 app.use(favicon(__dirname + '/public/favicon.ico'));
-
-//serve static files using express
+//serve static files
 app.use(express.static(__dirname + '/public'));
 
 // = logs to node console with every transaction
 //TODO Make this log to local file.
 app.use(function(request, response, next){
-    console.log('%s %s %s', request.method, request.url, request.path);
+    console.log('%s %s %s %s', request.method, request.url, request.path, colors.yellow(Date().toString()));
     next();
 });
 
@@ -55,22 +65,21 @@ app.use(function(request, response, next){
 app.use(bodyParser.json());
 
 // ===== EXPRESS ROUTES =====
+initDebugRoutes();
 
-// default tester route
-app.get('/debug', function(request, response){
-    var randomNumber = Math.ceil(Math.random() * 100);
-    response.type('text/plain');
-    response.send('Express routes are working. Your lucky number of the moment is ' + randomNumber + '.');
-});
+//first twitter route
+app.get('/tweest', function(request, response){
+    var tweestObject = [
+        {'name':'jeff', 'title':'creative technologist'},
+        {'name':'stephen', 'title':'executive producer'},
+        {'name':'helena', 'title':'digital producer / project manager / trafficker / qa'},
+        {'name':'ryan', 'title':'senior digital producer'},
+        {'name':'chianne', 'title':'digital producer'}
+    ];
 
-app.get('/debug/:loc', function(request, response){
-    var inputMessage = request.params.loc;
     response.type('text/html');
-    response.send('Debug Route 2 also working. You typed, <b>"' + inputMessage + '".</b>');
-});
-//basic 404 to catch all at the end
-app.get('*', function(request, response){
-    response.sendFile(__dirname + '/public/404.html');
+    response.send(JSON.stringify(tweestObject));
+
 });
 
 // ===== MAIN LOGIC =====
@@ -88,6 +97,28 @@ function init() {
 
     //open port on defined port, if nothing is available, default to 8000.
     app.listen(port || 3000);
+}
+
+/**
+ * Initializes all the DEBUG routes, acts as template to all other routes.
+ */
+function initDebugRoutes(){
+    // default tester route
+    app.get('/debug', function(request, response){
+        var randomNumber = Math.ceil(Math.random() * 100);
+        response.type('text/plain');
+        response.send('Express routes are working. Your lucky number of the moment is ' + randomNumber + '.');
+    });
+
+    app.get('/debug/:loc', function(request, response){
+        var inputMessage = request.params.loc;
+        response.type('text/html');
+        response.send('Debug Route 2 also working. You typed, <b>"' + inputMessage + '".</b>');
+    });
+//basic 404 to catch all at the end
+    app.get('*', function(request, response){
+        response.sendFile(__dirname + '/public/404.html');
+    });
 }
 
 

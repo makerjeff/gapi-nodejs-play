@@ -2,7 +2,8 @@
 Working with Google APIs with Node JS <br>
 Including Maps API <br>
 Including [Twitter NodeJS module](https://www.npmjs.com/package/twitter)<br>
-Added the use of environmental variables for storing access keys. **(NEW)**
+Added the use of environmental variables for storing access keys. **(NEW)**<br>
+[Adding CORS](http://enable-cors.org/server_expressjs.html) (cross origin resource sharing) to the TWITTER SPARTAN SERVER. **(NEW)**<br>
 
 ### Based on these tutorials:
 - [Node.JS Quick Start: Drive REST API](https://developers.google.com/drive/v3/web/quickstart/nodejs)
@@ -20,5 +21,8 @@ Added the use of environmental variables for storing access keys. **(NEW)**
 
 **util.inspect( object );** - used for debugging large objects. returns object in a string representation.<br>
 something else
+
+## Workflow
+Geolocation must be enabled during the tweet, and 'share precise location' must be enabled before the 'geo' and 'coordinates' keys get populated with their respective objects.
 
 
