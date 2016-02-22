@@ -59,7 +59,7 @@ function debugCurrentKeys(){
 function searchTweets(){
     console.log('searching for: ' + query + '...');
 
-    client.get('search/tweets',{q:query, count:3, include_entities: true} ,function(error, tweets, response){
+    client.get('search/tweets',{q:query, count:10, include_entities: true} ,function(error, tweets, response){
         if(error) {
             throw error;
         } else {
