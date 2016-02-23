@@ -25,7 +25,7 @@ var markerArray = [
     },
     {
         coordinates: {lat: 34.01, lng: -118.5},
-        text:"my second location! shined a random person's shoes.",
+        text:"my second location! shined a random person's shoes. https://t.co/FXA5GQn0V1, https://t.co/pLr3DIPQev",
         url:'http://www.makerjeff.com',
         url_text:'second location link'
     },
