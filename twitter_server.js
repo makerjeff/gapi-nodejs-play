@@ -1,9 +1,11 @@
 /**
  * TWITTER_SERVER.JS
- * TWITTER EXPRESS SERVER 0.1
- * Updated by jefferson.wu on 2016.FEB.18.
+ * TWITTER EXPRESS SERVER 0.1b
+ * Updated by jefferson.wu on 2016.FEB.23.
  *
  * changeLog:
+ * 2016.FEB.23:
+ * - re-arranging
  * 2016.FEB.19:
  * - enabled CORS
  * - added time stamp
