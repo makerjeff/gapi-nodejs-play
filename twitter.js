@@ -20,6 +20,7 @@ var client = new Twitter({
 
 var count = 0;
 var query = process.argv[2];
+var responseObj = {};
 
 ////object.stream(<method:string>, <{params:object}>, <callback:function>
 //client.stream('statuses/filter', {track: 'sxsw'}, function(stream){
@@ -40,11 +41,11 @@ var query = process.argv[2];
 //    });
 //});
 
-searchTweets();
+searchTweets(query);
 
 
 
-// HELPER FUNCTIONS
+// ===== HELPER FUNCTIONS =====
 
 /**
  * Dump current environment API keys to the console.
@@ -56,10 +57,10 @@ function debugCurrentKeys(){
     console.log('access token secret: ' + process.env.ACCESS_TOKEN_SECRET);
 }
 
-function searchTweets(){
-    console.log('searching for: ' + query + '...');
+function searchTweets(searchMe){
+    console.log('searching for: ' + searchMe + '...');
 
-    client.get('search/tweets',{q:query, count:10, include_entities: true} ,function(error, tweets, response){
+    client.get('search/tweets',{q:searchMe, count:10, include_entities: true} ,function(error, tweets, response){
         if(error) {
             throw error;
         } else {

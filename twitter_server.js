@@ -1,9 +1,11 @@
 /**
  * TWITTER_SERVER.JS
  * TWITTER EXPRESS SERVER 0.1b
- * Updated by jefferson.wu on 2016.FEB.23.
+ * Updated by jefferson.wu on 2016.FEB.24.
  *
  * changeLog:
+ * 2016.FEB.24:
+ * - more routes, more fixes.
  * 2016.FEB.23:
  * - re-arranging
  * 2016.FEB.19:
@@ -51,10 +53,11 @@ app.use(function(request, response, next) {
     next();
 });
 
-//serve favicon
-app.use(favicon(__dirname + '/public/favicon.ico'));
 //serve static files
 app.use(express.static(__dirname + '/public'));
+//serve favicon
+app.use(favicon(__dirname + '/public/favicon.ico'));
+
 
 // = logs to node console with every transaction
 //TODO Make this log to local file.
@@ -81,7 +84,25 @@ app.get('/tweest', function(request, response){
 
     response.type('text/html');
     response.send(JSON.stringify(tweestObject));
+});
 
+//second twitter route
+app.get('/tweest2', function(request, response){
+    var tweestObject = [
+        {'name':'jeff', 'title':'creative technologist'},
+        {'name':'stephen', 'title':'executive producer'},
+        {'name':'helena', 'title':'digital producer / project manager / trafficker / qa'},
+        {'name':'ryan', 'title':'senior digital producer'},
+        {'name':'chianne', 'title':'digital producer'}
+    ];
+
+    response.type('text/html');
+    response.send(JSON.stringify(tweestObject));
+});
+
+// basic 404 catch-all middleware
+app.get('*', function(request, response){
+    response.sendFile(__dirname + '/public/404.html');
 });
 
 // ===== MAIN LOGIC =====
@@ -95,7 +116,14 @@ init();
  */
 function init() {
     //console message
-    console.log(colors.rainbow(' Starting ') + colors.yellow('TWITTER EXPRESS SERVER ') + colors.blue(serverVersion) + colors.rainbow(' on ') + port + colors.rainbow(' on a ') + process.arch + colors.rainbow(' machine.'));
+    console.log(colors.rainbow(' Starting ') +
+        colors.yellow('TWITTER EXPRESS SERVER ') +
+        colors.blue(serverVersion) +
+        colors.rainbow(' on ') +
+        port +
+        colors.rainbow(' on a ') +
+        process.arch +
+        colors.rainbow(' machine.'));
 
     //open port on defined port, if nothing is available, default to 8000.
     app.listen(port || 3000);
@@ -117,10 +145,6 @@ function initDebugRoutes(){
         response.type('text/html');
         response.send('Debug Route 2 also working. You typed, <b>"' + inputMessage + '".</b>');
     });
-//basic 404 to catch all at the end
-    app.get('*', function(request, response){
-        response.sendFile(__dirname + '/public/404.html');
-    });
 }
 
 
@@ -135,14 +159,18 @@ function debugCurrentKeys(){
     console.log('access token secret: ' + process.env.ACCESS_TOKEN_SECRET);
 }
 
-function searchTweets(){
-    console.log('searching for: ' + query + '...');
+/**
+ * Search tweets
+ * @param searchString Criteria to search (currently doesn't work with hashtag symbols).
+ */
+function searchTweets(searchString){
+    console.log('searching for: ' + searchString + '...');
 
-    client.get('search/tweets',{q:query, count:3, include_entities: true} ,function(error, tweets, response){
+    client.get('search/tweets',{q:searchString, count:10, include_entities: true} ,function(error, tweets, response){
         if(error) {
             throw error;
         } else {
-            console.log(tweets);
+            console.log(JSON.parse(response.body));
             //console.log(response);
         }
     });
