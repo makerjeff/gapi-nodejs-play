@@ -8,10 +8,33 @@
 
 
     <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+
+            font-size: 16px;
+        }
+
+        h1 {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1.25em;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 1.25em;
+        }
 
     </style>
 </head>
 <body>
+<h1>Tweesting 1.2</h1>
 <div id="inputDiv">
     <input id="inputField" type="text" placeholder="enter query"><button id="submit">q</button>
 
@@ -32,14 +55,15 @@
 
         console.log(event.type);
 
-        getData('http://localhost:3000/debug/' + encodedIFV).then(function(response){
+        getData('http://localhost:3000/api/getTweets5/' + encodedIFV).then(function(response) {
             console.log('successfully grabbed data');
-            console.log('message: ' + response);
+            console.log('raw response: ');
+            console.log(response);
 
             displayResponse(response);
 
         }).catch(function(error){
-            console.log(Error('Failed' + error));
+            console.log(Error('Fay-Lo\'d: ' + error));
         });
 
         document.getElementById('inputField').value = '';
@@ -50,6 +74,17 @@
     // custom functions
 
     function displayResponse(responseText){
+
+        //var parsedData = JSON.parse(responseText);
+        //var contentString = parsedData;
+
+//        //debug
+//        parsedData.forEach(function(element, index, array){
+//            contentString += array[index].;
+//
+//        });
+
+
         resultDiv.innerHTML = responseText;
     }
 

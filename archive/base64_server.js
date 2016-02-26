@@ -4,7 +4,7 @@
  * Updated by jefferson.wu on 2016.FEB.23.
  */
 //ENVIRONMENT VARS / KEYS
-require('./dev_env.js');
+require('./../dev_env.js');
 
 //server version
 var serverVersion = '0.1';

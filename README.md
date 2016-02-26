@@ -16,8 +16,10 @@ Added the use of environmental variables for storing access keys.<br>
 - [Google Maps Info Windows](https://developers.google.com/maps/documentation/javascript/infowindows)
 - [Setting up environmental variables](http://thewebivore.com/super-simple-environment-variables-node-js/)
 - [Twitter GET API Reference](https://dev.twitter.com/rest/reference/get/search/tweets)
-- [Canvas from Scratch-CodeTuts](http://code.tutsplus.com/series/canvas-from-scratch--net-19650) **(NEW!)**
-- [Exploring Canvas Drawing Techniques](http://perfectionkills.com/exploring-canvas-drawing-techniques/) **(NEW!)**
+- [Canvas from Scratch-CodeTuts](http://code.tutsplus.com/series/canvas-from-scratch--net-19650)
+- [Exploring Canvas Drawing Techniques](http://perfectionkills.com/exploring-canvas-drawing-techniques/)
+- [Response.send() vs Response.json()](http://stackoverflow.com/questions/19041837/difference-between-res-send-and-res-json-in-express-js)
+- [Express 4 Body Parser Limits] (http://stackoverflow.com/questions/25332561/node-js-express-large-body-for-bodyparser); **(NEW!)**
 
 ## Notes
 

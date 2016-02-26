@@ -1,6 +1,6 @@
 /**
  * TWITTER_SERVER.JS
- * TWITTER EXPRESS SERVER 0.1b
+ * TWITTER EXPRESS SERVER 0.1c
  * Updated by jefferson.wu on 2016.FEB.24.
  *
  * changeLog:
@@ -18,7 +18,7 @@
 require('./dev_env.js');
 
 //server version
-var serverVersion = '0.1';
+var serverVersion = '0.1c';
 
 // ===== MODULES =====
 var express = require('express');
@@ -33,6 +33,8 @@ var Twitter = require('twitter');
 // ===== GLOBALS =====
 var app = express();        //init express
 var port = process.argv[2]; //input port at launch
+
+var twitterObject = {};     //store the twitter search results
 
 // ===== TWITTER SPECIFIC =====
 var client = new Twitter({
@@ -53,11 +55,9 @@ app.use(function(request, response, next) {
     next();
 });
 
-//serve static files
+//serve static files & favicon
 app.use(express.static(__dirname + '/public'));
-//serve favicon
 app.use(favicon(__dirname + '/public/favicon.ico'));
-
 
 // = logs to node console with every transaction
 //TODO Make this log to local file.
@@ -67,38 +67,16 @@ app.use(function(request, response, next){
 });
 
 // enable JSON parsing of POST requests
+//TODO pass in config limit '{limit: '5mb'}'
 app.use(bodyParser.json());
+
+//app.use(bodyParser.json({limit:'5mb'}));
+//app.use(bodyParser.urlencoded({limit: '5mb'}));
 
 // ===== EXPRESS ROUTES =====
 initDebugRoutes();
+initTwitterRoutes();
 
-//first twitter route
-app.get('/tweest', function(request, response){
-    var tweestObject = [
-        {'name':'jeff', 'title':'creative technologist'},
-        {'name':'stephen', 'title':'executive producer'},
-        {'name':'helena', 'title':'digital producer / project manager / trafficker / qa'},
-        {'name':'ryan', 'title':'senior digital producer'},
-        {'name':'chianne', 'title':'digital producer'}
-    ];
-
-    response.type('text/html');
-    response.send(JSON.stringify(tweestObject));
-});
-
-//second twitter route
-app.get('/tweest2', function(request, response){
-    var tweestObject = [
-        {'name':'jeff', 'title':'creative technologist'},
-        {'name':'stephen', 'title':'executive producer'},
-        {'name':'helena', 'title':'digital producer / project manager / trafficker / qa'},
-        {'name':'ryan', 'title':'senior digital producer'},
-        {'name':'chianne', 'title':'digital producer'}
-    ];
-
-    response.type('text/html');
-    response.send(JSON.stringify(tweestObject));
-});
 
 // basic 404 catch-all middleware
 app.get('*', function(request, response){
@@ -106,15 +84,14 @@ app.get('*', function(request, response){
 });
 
 // ===== MAIN LOGIC =====
-init();
+startServer();
 
 
 // ===== FUNCTION DEFINITIONS =====
 /**
- * Starts the EXPRESS server.
- *
+ * Starts the EXPRESS server on the defined global port.
  */
-function init() {
+function startServer() {
     //console message
     console.log(colors.rainbow(' Starting ') +
         colors.yellow('TWITTER EXPRESS SERVER ') +
@@ -147,10 +124,81 @@ function initDebugRoutes(){
     });
 }
 
+/**
+ * Initialize Twitter related routes
+ */
+function initTwitterRoutes(){
+    //first twitter route
+    app.get('/tweest', function(request, response){
+        var tweestArray = [
+            {'name':'jeff', 'title':'creative technologist'},
+            {'name':'stephen', 'title':'executive producer'},
+            {'name':'helena', 'title':'digital producer / project manager / trafficker / qa'},
+            {'name':'ryan', 'title':'senior digital producer'},
+            {'name':'chianne', 'title':'digital producer'}
+        ];
+
+        response.type('text/html');
+        response.json(JSON.stringify(tweestArray));
+    });
+
+//second twitter route
+    app.get('/tweest2', function(request, response){
+        var tweestArray = [
+            {'name':'jeff', 'title':'creative technologist'},
+            {'name':'stephen', 'title':'executive producer'},
+            {'name':'helena', 'title':'digital producer / project manager / trafficker / qa'},
+            {'name':'ryan', 'title':'senior digital producer'},
+            {'name':'chianne', 'title':'digital producer'}
+        ];
+
+        response.type('application/json');
+        response.json(tweestArray);
+    });
+
+    app.get('/api/getTweets5/', function(request, response){
+
+        var responseArray = [];
+
+        responseArray.push({"name":"jeff", "title":"creative technologist"});
+        responseArray.push({"name":"shirley", "title":"teacher"});
+
+        console.log('Route getTweets5 works.');
+
+        response.type('text/plain');
+        response.send(responseArray);
+
+        //TODO - CONTINUE HERE
+
+    });
+
+    // ===== RETURN TWEETS as
+    app.get('/api/getTweets/:search', function(request, response){
+
+        var dataGrabbed = searchTweets(request.params.search);
+        console.log(dataGrabbed);
+
+        //response.type('text/plain');
+        response.json(dataGrabbed);
+
+    });
+
+    // ===== RETURN TWEETS as
+    app.get('/api/getTweet5/:search', function(request, response){
+
+        var dataGrabbed = request.params.search;
+        console.log(dataGrabbed);
+
+        //response.type('text/plain');
+        response.json(dataGrabbed);
+
+    });
+}
+
 
 // TWITTER FUNCTIONS
 /**
- * Dump current environment API keys to the console.
+ * DEBUG: Dump current environment API keys to the console.
  */
 function debugCurrentKeys(){
     console.log('consumer key: ' + process.env.CONSUMER_KEY);
@@ -167,11 +215,15 @@ function searchTweets(searchString){
     console.log('searching for: ' + searchString + '...');
 
     client.get('search/tweets',{q:searchString, count:10, include_entities: true} ,function(error, tweets, response){
+
         if(error) {
             throw error;
         } else {
+            twitterObject = JSON.parse(response.body);
             console.log(JSON.parse(response.body));
             //console.log(response);
+
+            return twitterObject;
         }
     });
 }
