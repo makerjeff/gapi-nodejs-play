@@ -20,6 +20,7 @@ Added the use of environmental variables for storing access keys.<br>
 - [Exploring Canvas Drawing Techniques](http://perfectionkills.com/exploring-canvas-drawing-techniques/)
 - [Response.send() vs Response.json()](http://stackoverflow.com/questions/19041837/difference-between-res-send-and-res-json-in-express-js)
 - [Express 4 Body Parser Limits] (http://stackoverflow.com/questions/25332561/node-js-express-large-body-for-bodyparser); **(NEW!)**
+- [WebStorm Code region](https://www.jetbrains.com/webstorm/help/folding-and-expanding-code-blocks.html) **(NEW!)**
 
 ## Notes
 
