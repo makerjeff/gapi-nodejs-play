@@ -1,5 +1,6 @@
 /**
  * Created by jefferson.wu on 2/17/16.
+ * Updated 2016.FEB.29: dumping returned stuff to text file
  */
 //ENVIRONMENT VARS / KEYS
 
@@ -7,6 +8,7 @@
 
 // MODULES
 var Twitter = require('twitter');
+var fs = require('fs');
 
 // OBJECTS
 var client = new Twitter({
@@ -66,6 +68,16 @@ function searchTweets(searchMe){
         } else {
             console.log(JSON.parse(response.body));
             //console.log(response);
+        }
+
+        dumpTextToFile(response.body.toString());
+    });
+}
+
+function dumpTextToFile(obj){
+    fs.appendFile('server-log.txt', obj, function(error){
+        if(error){
+            return console.log(Error(error));
         }
     });
 }

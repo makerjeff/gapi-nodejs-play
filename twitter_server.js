@@ -1,9 +1,11 @@
 /**
  * TWITTER_SERVER.JS
- * TWITTER EXPRESS SERVER 0.1c
- * Updated by jefferson.wu on 2016.FEB.24.
+ * TWITTER EXPRESS SERVER 0.1d
+ * Updated by jefferson.wu on 2016.FEB.29.
  *
  * changeLog:
+ * 2016.FEB.29:
+ * - making body parser use more memory
  * 2016.FEB.24:
  * - more routes, more fixes.
  * 2016.FEB.23:
@@ -18,7 +20,7 @@
 require('./dev_env.js');
 
 //server version
-var serverVersion = '0.1c';
+var serverVersion = '0.1d';
 
 // ===== MODULES =====
 var express = require('express');
@@ -171,6 +173,26 @@ function initTwitterRoutes(){
         //TODO - CONTINUE HERE
 
     });
+
+    app.get('/api/getTweets5/:search', function(request, response){
+
+        var responseArray = [];
+
+        responseArray.push({"name":"jeff", "title":"creative technologist"});
+        responseArray.push({"name":"shirley", "title":"teacher"});
+
+        console.log('Route getTweets5 works.');
+
+        response.type('text/plain');
+        response.send(responseArray);
+
+        //TODO - CONTINUE HERE
+
+    });
+
+
+
+
 
     // ===== RETURN TWEETS as
     app.get('/api/getTweets/:search', function(request, response){
