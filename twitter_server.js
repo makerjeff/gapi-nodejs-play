@@ -201,6 +201,12 @@ function initTwitterRoutes(){
         response.send(JSON.stringify(data));
     });
 
+    app.get('/api/debug3:search', function(request, response){
+
+        var q = request.params.search;
+
+        var data = request()
+    });
 }
 
 

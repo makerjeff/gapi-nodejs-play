@@ -70,11 +70,12 @@ function searchTweets(searchMe){
             //console.log(response);
         }
 
-        dumpTextToFile(response.body.toString());
+        //dump singleto log file, but create a line break
+        dumpSingleTextToFile(response.body.toString() + '\n');
     });
 }
 
-function dumpTextToFile(obj){
+function dumpSingleTextToFile(obj){
     fs.writeFile('server-log.txt', obj, function(error){
         if(error){
             return console.log(Error(error));
