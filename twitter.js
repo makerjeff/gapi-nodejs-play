@@ -75,7 +75,7 @@ function searchTweets(searchMe){
 }
 
 function dumpTextToFile(obj){
-    fs.appendFile('server-log.txt', obj, function(error){
+    fs.writeFile('server-log.txt', obj, function(error){
         if(error){
             return console.log(Error(error));
         }

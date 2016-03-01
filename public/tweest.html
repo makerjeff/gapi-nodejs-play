@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-<h1>Tweesting 1.2</h1>
+<h1>Tweesting 1.2d</h1>
 <div id="inputDiv">
     <input id="inputField" type="text" placeholder="enter query"><button id="submit">q</button>
 
@@ -48,6 +48,7 @@
     var resultDiv = document.getElementById('resultDiv');
     var button = document.getElementById('submit');
 
+
     button.addEventListener('click', function(event){
 
         var inputFieldValue = document.getElementById('inputField').value;
@@ -55,12 +56,21 @@
 
         console.log(event.type);
 
-        getData('http://localhost:3000/api/getTweets5/' + encodedIFV).then(function(response) {
+        getData('http://localhost:3000/api/debug3/' + encodedIFV).then(function(response) {
+
+            // MAIN LOGIC HERE
             console.log('successfully grabbed data');
             console.log('raw response: ');
-            console.log(response);
 
-            displayResponse(response);
+            var parsedData = JSON.parse(response);
+
+            console.log(parsedData);
+            displayResponse(parsedData);
+
+            var img = document.createElement('img');
+            img.src = decodeURI(parsedData.statuses[0].entities.media[0].media_url);
+            document.body.appendChild(img);
+
 
         }).catch(function(error){
             console.log(Error('Fay-Lo\'d: ' + error));

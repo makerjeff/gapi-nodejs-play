@@ -31,6 +31,3 @@ function getData(url) {
     });
 }
 
-// POST DATA FUNCTION
-//TODO
-
