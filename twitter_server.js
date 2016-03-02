@@ -1,9 +1,11 @@
 /**
  * TWITTER_SERVER.JS
- * TWITTER EXPRESS SERVER 0.1d
- * Updated by jefferson.wu on 2016.FEB.29.
+ * TWITTER EXPRESS SERVER 0.1e
+ * Updated by jefferson.wu on 2016.MAR.01.
  *
  * changeLog:
+ * 2016.MAR.01:
+ * - using the 'request' module for XHR calls
  * 2016.FEB.29:
  * - making body parser use more memory
  * 2016.FEB.24:
@@ -29,6 +31,7 @@ var mongoose = require('mongoose');
 var colors = require('colors');
 var favicon = require('serve-favicon');
 var Twitter = require('twitter');
+var request = require('request');   //HTTP request module
 
 
 
@@ -201,11 +204,17 @@ function initTwitterRoutes(){
         response.send(JSON.stringify(data));
     });
 
-    app.get('/api/debug3:search', function(request, response){
+    app.get('/api/debug4/', function(req, res){
 
-        var q = request.params.search;
+        var q = req.params.search;
 
-        var data = request()
+        var data = request('http://www.wuyangclan.com/debug', function(error, response, body){
+            if(error){
+                console.log(Error(error));
+            } else {
+                console.log(body);
+            }
+        });
     });
 }
 

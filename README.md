@@ -22,6 +22,7 @@ Added the use of environmental variables for storing access keys.<br>
 - [Express 4 Body Parser Limits] (http://stackoverflow.com/questions/25332561/node-js-express-large-body-for-bodyparser)
 - [WebStorm Code region](https://www.jetbrains.com/webstorm/help/folding-and-expanding-code-blocks.html)
 - [NodeJS File System](http://www.tutorialspoint.com/nodejs/nodejs_file_system.htm) **(NEW!)**
+- [NodeJS Require Module](http://www.sitepoint.com/making-http-requests-in-node-js/) **(NEW!)**
 
 ## Notes
 
