@@ -3,3 +3,4 @@ node_modules/
 public/api_key.js
 axure/
 dev_env.js
+server-log.js

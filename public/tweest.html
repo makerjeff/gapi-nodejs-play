@@ -3,14 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Twee-st</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <script src="./js/promise_xhr.js"></script>
 
 
     <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+
+            font-size: 16px;
+        }
+
+        h1 {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1.25em;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 1.25em;
+        }
 
     </style>
 </head>
 <body>
+<h1>Tweesting 1.2d</h1>
 <div id="inputDiv">
     <input id="inputField" type="text" placeholder="enter query"><button id="submit">q</button>
 
@@ -19,40 +43,7 @@
 <div id="resultDiv">
 </div>
 
-<script>
-    var inputField = document.getElementById('inputField');
-    var resultDiv = document.getElementById('resultDiv');
-    var button = document.getElementById('submit');
-
-    button.addEventListener('click', function(event){
-
-        var inputFieldValue = document.getElementById('inputField').value;
-        var encodedIFV = encodeURI(inputFieldValue);
-
-        console.log(event.type);
-
-        getData('http://localhost:3000/debug/' + encodedIFV).then(function(response){
-            console.log('successfully grabbed data');
-            console.log('message: ' + response);
-
-            displayResponse(response);
-
-        }).catch(function(error){
-            console.log(Error('Failed' + error));
-        });
-
-        document.getElementById('inputField').value = '';
-    });
-
-
-
-    // custom functions
-
-    function displayResponse(responseText){
-        resultDiv.innerHTML = responseText;
-    }
-
-</script>
+<script src="./js/tweest.js"></script>
 
 </body>
 </html>

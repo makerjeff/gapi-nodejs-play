@@ -13,6 +13,7 @@
     "socket.io":"latest",
     "serialport":"latest",
     "serve-favicon":"latest",
-    "twitter":"latest"
+    "twitter":"latest",
+    "request":"latest"
   }
 }

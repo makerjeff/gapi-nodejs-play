@@ -18,64 +18,88 @@ var marker2Text = 'This is a little further away from work.';
 //array of custom test markers. should be schema for custom data from TWITTER SPARTAN SERVER
 var markerArray = [
     {
-        coordinates: {lat: 34.008928, lng: -118.491824},
+        coordinates: {lat: 34.00916284045981, lng: -118.49162578582764},
         text:"my first location! ate an icecream cone.",
         url:'http://www.makerjeff.com',
         url_text:'first location link'
     },
     {
-        coordinates: {lat: 34.01, lng: -118.5},
-        text:"my second location! shined a random person's shoes.",
+        coordinates: {lat: 34.0083535145767, lng: -118.49121809005737},
+        text:"my second location! shined a random person's shoes. https://t.co/FXA5GQn0V1, https://t.co/pLr3DIPQev",
         url:'http://www.makerjeff.com',
         url_text:'second location link'
     },
     {
-        coordinates: {lat: 34.015, lng: -118.48},
+        coordinates: {lat: 34.00747303040494, lng: -118.49031686782837},
         text:"my third location! rode a bicycle into a wall.",
         url:'http://www.makerjeff.com',
         url_text:'third location link'
     },
     {
-        coordinates: {lat: 34.02, lng: -118.51},
+        coordinates: {lat: 34.006850460329446, lng: -118.49122881889342},
         text:"my fourth location! picked up a stranger.",
         url:'http://www.makerjeff.com',
         url_text:'fourth location link'
     },
     {
-        coordinates: {lat: 34.025, lng: -118.48},
+        coordinates: {lat: 34.00606779433055, lng: -118.49043488502504},
         text:"my fifth location! dropped off a stranger.",
         url:'http://www.makerjeff.com',
         url_text:'fifth location link'
     },
     {
-        coordinates: {lat: 34.03, lng: -118.51},
+        coordinates: {lat: 34.005694246651856, lng: -118.49111080169676},
         text:"my sixth location! was stalked by a creeper.",
         url:'http://www.makerjeff.com',
         url_text:'sixth location link'
     },
     {
-        coordinates: {lat: 34.035, lng: -118.49},
+        coordinates: {lat: 34.00645023429936, lng: -118.49170088768005},
         text:"my seventh location! took a nap.",
         url:'http://www.makerjeff.com',
         url_text:'seventh location link'
     },
     {
-        coordinates: {lat: 34.045, lng: -118.48},
+        coordinates: {lat: 34.00698386858699, lng: -118.49230170249939},
         text:"my eighth location! had a child.",
         url:'http://www.makerjeff.com',
         url_text:'eighth location link'
     },
     {
-        coordinates: {lat: 34.050, lng: -118.51},
+        coordinates: {lat: 34.008175639722324, lng: -118.49348187446593},
         text:"my ninth location! fed the child.",
         url:'http://www.makerjeff.com',
         url_text:'ninth location link'
     },
     {
-        coordinates: {lat: 34.051, lng: -118.50},
+        coordinates: {lat: 34.00903832928754, lng: -118.4937286376953},
         text:"my tenth location! my life is all about the child.",
         url:'http://www.makerjeff.com',
         url_text:'tenth location link'
+    },
+    {
+        coordinates: {lat: 34.00951858566024, lng: -118.49505901336669},
+        text:"my eleventh location! I'm getting old.",
+        url:'http://www.makerjeff.com',
+        url_text:'11th location link'
+    },
+    {
+        coordinates: {lat: 34.01028343279438, lng: -118.49608898162842},
+        text:"my 12th location! going to retire soon.",
+        url:'http://www.makerjeff.com',
+        url_text:'12th location link'
+    },
+    {
+        coordinates: {lat: 34.00746413657887, lng: -118.4997797012329},
+        text:"...",
+        url:'http://www.makerjeff.com',
+        url_text:'13th location link'
+    },
+    {
+        coordinates: {lat: 34.00579208072652, lng: -118.49766612052917},
+        text:"(floating corpse down the river)",
+        url:'http://www.makerjeff.com',
+        url_text:'14th location link'
     }
 ];
 
@@ -124,12 +148,13 @@ function addPin() {
  * JSONP Callback From Google
  */
 function initAll () {
-    initMap();
-    //initDrawing();
-    //put logic here as this runs after google has been loaded.
+    //put maps loading logic here
 
-    //find the average
-    findAverageCoords(markerArray);
+    initMap();
+    initMarkers(markerArray);
+    //initDrawing();
+    drawTravelPath(markerArray);
+    //findAverageCoords(markerArray);
 }
 
 /**
@@ -140,7 +165,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat:findAverageCoords(markerArray).lat, lng:findAverageCoords(markerArray).lng},
         //zoom level: 1=world, 5=landmass/continent, 10=city, 15=streets, 20=building
-        zoom: 13
+        zoom: 17
     });
 
     //===== MAP STYLES =====
@@ -213,42 +238,7 @@ function initMap() {
     //add now
     //marker2.setMap(map);
 
-    // ===== AUTO MARKERS BASED ON MARKER ARRAY ======
-    markerArray.forEach(function(element, index, array){
 
-        console.log(array[index].text);
-        console.log(array[index].coordinates.lat);
-        //
-        var lat = array[index].coordinates.lat;
-        var lng = array[index].coordinates.lng;
-
-        //create marker
-        var marker = new google.maps.Marker({position: array[index].coordinates, map: map, title: array[index].text, icon:'./img/heart-outline-sm.png'});
-
-        //create info window for marker
-        var infowindow = new google.maps.InfoWindow({
-            content: '<b>' +
-            array[index].text +
-            '</b>' +
-            '<p> Some information about the location here at ' +
-            array[index].coordinates.lat +
-            ',' +
-            array[index].coordinates.lng +
-            '</p>'+
-            '<p>' +
-            '<a href="' +
-            array[index].url +
-            '" target="_blank">' +
-            array[index].url_text +
-            '</a>' +
-            '</p>'
-        });
-
-        //create click listener to pop open infoWindow
-        marker.addListener('click', function(){
-            infowindow.open(map, marker);
-        });
-    });
 
 
     // ===== CUSTOM INFO WINDOWS =====
@@ -274,7 +264,9 @@ function initMap() {
 }
 
 // ====== HELPER FUNCTIONS AND CALLBACKS =====
-
+/**
+ * Initialize google maps drawing controls (not used)
+ */
 function initDrawing() {
     //DRAWING MANAGER
     var drawingManager = new google.maps.drawing.DrawingManager(
@@ -325,9 +317,9 @@ function initDrawing() {
 
 /**
  * Find the average of the coordinates and returns lat-lng object
- * @param array Lat-Lng array to parse. Should follow TWITTER SPARTAN SERVER schema.
+ * @param arr Lat-Lng array to parse. Should follow TWITTER SPARTAN SERVER schema.
  */
-function findAverageCoords(array){
+function findAverageCoords(arr){
     var returnObject = {lat:0, lng:0};
 
     var latArray = [];
@@ -340,7 +332,7 @@ function findAverageCoords(array){
     var avgLng = 0;
 
     //add value to array
-    array.forEach(function(element, index, array){
+    arr.forEach(function(element, index, array){
 
         //load up the lat array
         latArray.push(array[index].coordinates.lat);
@@ -366,6 +358,88 @@ function findAverageCoords(array){
     return returnObject;
 }
 
-//TODO: draw line elements between markers
+function initMarkers(arr){
+// ===== AUTO MARKERS BASED ON MARKER ARRAY ======
+    arr.forEach(function(element, index, array){
 
+        console.log(array[index].text);
+        console.log(array[index].coordinates.lat);
+        //
+        var lat = array[index].coordinates.lat;
+        var lng = array[index].coordinates.lng;
+
+        //create marker
+        var marker = new google.maps.Marker(
+            {
+                position: array[index].coordinates,
+                map: map,
+                title: array[index].text,
+                icon:'./img/heart-outline-sm.png'
+                // animation: google.maps.Animation.DROP
+            });
+
+        //create info window for marker
+        var infowindow = new google.maps.InfoWindow(
+            {
+                content: '<b>' +
+                array[index].text +
+                '</b>' +
+                '<p> Some information about the location here at ' +
+                array[index].coordinates.lat +
+                ',' +
+                array[index].coordinates.lng +
+                '</p>'+
+                '<p>' +
+                '<a href="' +
+                array[index].url +
+                '" target="_blank">' +
+                array[index].url_text +
+                '</a>' +
+                '</p>'
+            }
+        );
+
+        //create click listener to pop open infoWindow
+        marker.addListener('click', function(){
+            infowindow.open(map, marker);
+
+            //animations
+            //if(marker.getAnimation() !== null) {
+            //    marker.setAnimation(null);
+            //} else {
+            //    marker.setAnimation(google.maps.Animation.BOUNCE);
+            //}
+        });
+    });
+}
+/**
+ * Draw travel path based on array parameter
+ * @param array Array of lat-long coordinate objects (see GeoJSON spec)
+ */
+function drawTravelPath(array){
+    //temp array
+    var travelPathCoordinates = [];
+
+    console.log('coordinate dump!:')
+
+    array.forEach(function(element, index, array){
+        console.log('pushing: ' + array[index].coordinates.lat + ', ' + array[index].coordinates.lng + ' to array');
+
+        //push to temp array
+        travelPathCoordinates.push(array[index].coordinates);
+    });
+
+    var travelPath = new google.maps.Polyline({
+        path: travelPathCoordinates,
+        geodesic: true,
+        strokeColor: '#F7005A',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+
+    travelPath.setMap(map);
+}
+
+//TODO: consolidate all draw functions to one function
+//TODO: namespace this app to prevent contamination
 //TODO: try Draw Library https://developers.google.com/maps/documentation/javascript/drawinglayer

@@ -1,5 +1,6 @@
 /**
  * Created by jefferson.wu on 2/17/16.
+ * Updated 2016.FEB.29: dumping returned stuff to text file
  */
 //ENVIRONMENT VARS / KEYS
 
@@ -7,6 +8,7 @@
 
 // MODULES
 var Twitter = require('twitter');
+var fs = require('fs');
 
 // OBJECTS
 var client = new Twitter({
@@ -20,6 +22,7 @@ var client = new Twitter({
 
 var count = 0;
 var query = process.argv[2];
+var responseObj = {};
 
 ////object.stream(<method:string>, <{params:object}>, <callback:function>
 //client.stream('statuses/filter', {track: 'sxsw'}, function(stream){
@@ -40,11 +43,11 @@ var query = process.argv[2];
 //    });
 //});
 
-searchTweets();
+searchTweets(query);
 
 
 
-// HELPER FUNCTIONS
+// ===== HELPER FUNCTIONS =====
 
 /**
  * Dump current environment API keys to the console.
@@ -56,15 +59,26 @@ function debugCurrentKeys(){
     console.log('access token secret: ' + process.env.ACCESS_TOKEN_SECRET);
 }
 
-function searchTweets(){
-    console.log('searching for: ' + query + '...');
+function searchTweets(searchMe){
+    console.log('searching for: ' + searchMe + '...');
 
-    client.get('search/tweets',{q:query, count:3, include_entities: true} ,function(error, tweets, response){
+    client.get('search/tweets',{q:searchMe, count:10, include_entities: true} ,function(error, tweets, response){
         if(error) {
             throw error;
         } else {
             console.log(JSON.parse(response.body));
             //console.log(response);
+        }
+
+        //dump singleto log file, but create a line break
+        dumpSingleTextToFile(response.body.toString() + '\n');
+    });
+}
+
+function dumpSingleTextToFile(obj){
+    fs.writeFile('server-log.txt', obj, function(error){
+        if(error){
+            return console.log(Error(error));
         }
     });
 }
