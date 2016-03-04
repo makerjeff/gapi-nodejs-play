@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Popper Upper</title>
+
+    <style>
+        /*MUST DECLARE, OTHERWISE BODY DOESN'T FILL*/
+        /*this bypasses the need for 'adjustWindow.js'*/
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        #popup_link {
+            position: fixed;
+
+        }
+
+        .modal {
+            display: flex;
+            position: fixed;
+
+            justify-content: center;
+            align-items: center;
+
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,0,0,0.5);
+
+            z-index: 100;
+        }
+
+        #innerBox {
+            width: 100px;
+            height: 100px;
+
+            background: black;
+        }
+
+        .closeButton {
+            position: fixed;
+            top: 0px;
+            right: 0px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div id="popup_link">MAP</div>
+
+
+<!--<div id="modal">-->
+    <!--this is a modal-->
+
+    <!--<div id="innerBox"></div>-->
+
+    <!--<button id="closeButton">X</button>-->
+
+<!--</div>-->
+<script>
+
+    var popupButton = document.getElementById('popup_link');
+
+    var modalDiv = document.getElementById('modal');
+    var modalCloseButton = document.getElementById('closeButton');
+
+//    //popup content
+//    popupButton.addEventListener('click',function(e){
+//        //create modal
+//        var modal = document.createElement('div');
+//        var modalText = document.createTextNode('this is a modal');
+//        var closeButton = document.createElement('button');
+//        var closeButtonText = document.createTextNode('X');
+//
+//        modal.appendChild(modalText);
+//        closeButton.appendChild(closeButtonText);
+//        closeButton.classList.add('closeButton');
+//
+//        modal.appendChild(closeButton);
+//        document.body.appendChild(modal);
+//
+//        modal.classList.add('modal');
+//
+//
+//        closeButton.addEventListener('click', function(event){
+//            document.body.removeChild(modal);
+//        });
+//    });
+
+
+
+    popupButton.addEventListener('click', function(e){
+        var mapMaker = new MapMaker();
+
+    });
+
+
+    //TODO: make into constructor
+    var MapMaker = function(){
+        //create modal
+        this.modal = document.createElement('div');
+        this.modalText = document.createTextNode('this is a modal');
+        this.closeButton = document.createElement('button');
+        this.closeButtonText = document.createTextNode('X');
+
+        this.modal.appendChild(this.modalText);
+        this.closeButton.appendChild(this.closeButtonText);
+        this.closeButton.classList.add('closeButton');
+
+        this.modal.appendChild(this.closeButton);
+        document.body.appendChild(this.modal);
+
+        this.modal.classList.add('modal');
+
+        this.closeButton.addEventListener('click', function(event){
+            document.body.removeChild(this.parentNode);
+        });
+    }
+
+
+</script>
+
+</body>
+</html>
