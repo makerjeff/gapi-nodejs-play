@@ -108,11 +108,13 @@
         //create modal
         this.modal = document.createElement('div');
         this.modalText = document.createTextNode('this is a modal');
+
         this.closeButton = document.createElement('button');
         this.closeButtonText = document.createTextNode('X');
 
         this.modal.appendChild(this.modalText);
         this.closeButton.appendChild(this.closeButtonText);
+
         this.closeButton.classList.add('closeButton');
 
         this.modal.appendChild(this.closeButton);
@@ -120,6 +122,7 @@
 
         this.modal.classList.add('modal');
 
+        //add close functionality
         this.closeButton.addEventListener('click', function(event){
             document.body.removeChild(this.parentNode);
         });
