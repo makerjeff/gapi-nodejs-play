@@ -56,7 +56,9 @@
 
 <div id="popup_link">MAP</div>
 
+<div id="map"></div>
 
+<!-- Start Square Appointments Embed code --><a style="background-color: #be3a34; color: white; height: 40px; text-transform: uppercase; font-family: 'Square Market', 'helvetica neue', helvetica, arial, sans-serif; letter-spacing: 1px; line-height: 38px; padding: 0 28px; border-radius: 3px; font-weight: 500; font-size: 14px; cursor: pointer; display: inline-block;" href="https://squareup.com/appointments/buyer/widget/a0d5fbbb-ea0a-45d7-853b-cefd7228bf92">Book an Interview</a><!-- End Square Appointments Embed code -->
 <!--<div id="modal">-->
     <!--this is a modal-->
 
@@ -65,6 +67,12 @@
     <!--<button id="closeButton">X</button>-->
 
 <!--</div>-->
+
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVfkLpNr4RoZ335Hb_bY7vRHWbUptwimI&callback=initMap">
+</script>
+
 <script>
 
     var popupButton = document.getElementById('popup_link');
@@ -103,8 +111,11 @@
     });
 
 
+
     //TODO: make into constructor
     var MapMaker = function(){
+
+        // ===== CREATE =====
         //create modal
         this.modal = document.createElement('div');
         this.modalText = document.createTextNode('this is a modal');
@@ -122,14 +133,26 @@
 
         this.modal.classList.add('modal');
 
+
+        // ===== EVENTS =====
         //add close functionality
         this.closeButton.addEventListener('click', function(event){
             document.body.removeChild(this.parentNode);
+        });
+
+    }
+
+
+    function initMap(){
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: {lat: -28, lng: 137}
         });
     }
 
 
 </script>
+
 
 </body>
 </html>
