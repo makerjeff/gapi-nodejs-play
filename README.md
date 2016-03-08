@@ -23,6 +23,7 @@ Added the use of environmental variables for storing access keys.<br>
 - [WebStorm Code region](https://www.jetbrains.com/webstorm/help/folding-and-expanding-code-blocks.html)
 - [NodeJS File System](http://www.tutorialspoint.com/nodejs/nodejs_file_system.htm) **(NEW!)**
 - [NodeJS Require Module](http://www.sitepoint.com/making-http-requests-in-node-js/) **(NEW!)**
+- [Vimeo Javascript API] (https://css-tricks.com/play-button-youtube-and-vimeo-api/) **(NEW!)**
 
 ## Notes
 
