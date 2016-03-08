@@ -31,7 +31,7 @@
             left: 0px;
             width: 100%;
             height: 100%;
-            background: rgba(255,0,0,0.5);
+            background: rgba(0,0,0,0.5);
 
             z-index: 100;
         }
@@ -47,6 +47,14 @@
             position: fixed;
             top: 0px;
             right: 0px;
+
+            z-index: 100;
+        }
+
+
+        #map {
+            height: 100%;
+            width: 100%;
         }
 
 
@@ -56,10 +64,9 @@
 
 <div id="popup_link">MAP</div>
 
-<div id="map"></div>
+<!--<div id="map"></div>-->
 
-<!-- Start Square Appointments Embed code --><a style="background-color: #be3a34; color: white; height: 40px; text-transform: uppercase; font-family: 'Square Market', 'helvetica neue', helvetica, arial, sans-serif; letter-spacing: 1px; line-height: 38px; padding: 0 28px; border-radius: 3px; font-weight: 500; font-size: 14px; cursor: pointer; display: inline-block;" href="https://squareup.com/appointments/buyer/widget/a0d5fbbb-ea0a-45d7-853b-cefd7228bf92">Book an Interview</a><!-- End Square Appointments Embed code -->
-<!--<div id="modal">-->
+
     <!--this is a modal-->
 
     <!--<div id="innerBox"></div>-->
@@ -118,13 +125,18 @@
         // ===== CREATE =====
         //create modal
         this.modal = document.createElement('div');
-        this.modalText = document.createTextNode('this is a modal');
+        //this.modalText = document.createTextNode('this is a modal');
 
         this.closeButton = document.createElement('button');
         this.closeButtonText = document.createTextNode('X');
 
-        this.modal.appendChild(this.modalText);
+        //this.modal.appendChild(this.modalText);
         this.closeButton.appendChild(this.closeButtonText);
+
+        //create map div
+        this.mapDiv = document.createElement('div');
+        this.mapDiv.setAttribute('id', 'map');
+        this.modal.appendChild(this.mapDiv);
 
         this.closeButton.classList.add('closeButton');
 
@@ -132,6 +144,9 @@
         document.body.appendChild(this.modal);
 
         this.modal.classList.add('modal');
+
+        //fire tha MAP lasers!
+        initMap();
 
 
         // ===== EVENTS =====
@@ -145,8 +160,8 @@
 
     function initMap(){
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            center: {lat: -28, lng: 137}
+            zoom: 15,
+            center: {lat:30.30, lng: -97.70}
         });
     }
 
